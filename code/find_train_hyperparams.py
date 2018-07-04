@@ -23,8 +23,11 @@ def f(x):
 
 
 class CheckpointSaver():
-    def __init__(self):
-        self.__iteration = 0
+    """A wrapper of checkpoint_saver() method with iterator index to save
+    different checkpoints to different files"""
+
+    def __init__(self, iteration):
+        self.__iteration = iteration
 
 
     def do(self, res):
@@ -36,6 +39,7 @@ class CheckpointSaver():
 
         with open("checkpoint{:08}.pkl".format(self.__iteration), "wb") as f:
             p = pickle.Pickler(f)
+            p.dump(self.__iteration)
             p.dump(res.x_iters)
             p.dump(res.func_vals)
 
@@ -48,18 +52,21 @@ def checkpoint_loader(fileName):
 
     with open(fileName, "rb") as f:
         u = pickle.Unpickler(f)
+        iteration = u.load()
         x_iters = u.load()
         func_vels = u.load()
 
-    return x_iters, func_vels
+    return iteration, x_iters, func_vels
 
 
-checkpoints = sorted(glob.glob("*.pkl"))
+checkpoints = sorted(glob.glob("checkpoint*.pkl"))
 if len(checkpoints) > 1:
     # The last checkpoint may be broken if the process was interrupted while
     # saving it, so load the checkpoint before the last one
-    x0, y0 = checkpoint_loader(checkpoints[-2])
+    file_name = checkpoints[-2]
+    start_iteration, x0, y0 = checkpoint_loader(file_name)
 else:
+    start_iteration = 0
     x0 = None
     y0 = None
 
@@ -70,7 +77,7 @@ if x0 is not None:
 res = gp_minimize(
     f,
     [(-10.0, 10.0), [1, 2, 3, 4, 5]],
-    callback=[CheckpointSaver().do],
+    callback=[CheckpointSaver(start_iteration).do],
     x0=x0,
     y0=y0,
     n_calls=n_calls)
