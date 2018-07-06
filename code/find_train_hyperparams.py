@@ -284,7 +284,7 @@ if x0 is not None:
 
 res = gp_minimize(
     train_net,
-    [(1e-8, 0.01), # learning_rate = x[0] # 0.001
+    [[1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2], # learning_rate = x[0] # 0.001
      (4, 32),     # batch_size = x[1] # 32
      (5, 100),    # num_epochs = x[2] # 12
      (1, 5),      # layers_num = x[3] #2
