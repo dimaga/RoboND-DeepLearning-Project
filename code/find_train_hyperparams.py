@@ -99,10 +99,8 @@ def encoder_block(input_layer, filters, strides):
 def decoder_block(small_ip_layer, large_ip_layer, filters):
     upsampled = bilinear_upsample(small_ip_layer)
     concatenated = layers.concatenate([upsampled, large_ip_layer])
-
-    output_layer1 = separable_conv2d_batchnorm(concatenated, filters)
-    output_layer2 = separable_conv2d_batchnorm(output_layer1, filters)
-    return output_layer2
+    output_layer = separable_conv2d_batchnorm(concatenated, filters)
+    return output_layer
 
 
 def fcn_model(
@@ -284,7 +282,7 @@ if x0 is not None:
 
 res = gp_minimize(
     train_net,
-    [[1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2], # learning_rate = x[0] # 0.001
+    [[1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2], # learning_rate = x[0] # 0.001
      (4, 32),     # batch_size = x[1] # 32
      (5, 100),    # num_epochs = x[2] # 12
      (1, 5),      # layers_num = x[3] #2
