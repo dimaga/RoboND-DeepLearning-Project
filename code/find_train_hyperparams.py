@@ -10,21 +10,13 @@ See more details at https://github.com/scikit-optimize/scikit-optimize 
 """
 
 import pickle
-import glob
 from skopt import gp_minimize
 
 import os
 import glob
-import sys
-import tensorflow as tf
-
-from scipy import misc
-import numpy as np
 
 from tensorflow.contrib.keras.python import keras
 from tensorflow.contrib.keras.python.keras import layers, models
-
-from tensorflow import image
 
 from utils import scoring_utils
 from utils.separable_conv2d import SeparableConv2DKeras, BilinearUpSampling2D
@@ -162,6 +154,16 @@ def train_net(x):
     internal_features = x[6] #16
     conv_features = x[7] #16
 
+    print()
+    print("learning_rate", learning_rate)
+    print("batch_size", batch_size)
+    print("num_epochs", num_epochs)
+    print("layers_num", layers_num)
+    print("conv_layers_num", conv_layers_num)
+    print("external_features", external_features)
+    print("internal_features", internal_features)
+    print("conv_features", conv_features)
+
     image_hw = 160
     image_shape = (image_hw, image_hw, 3)
     inputs = layers.Input(image_shape)
@@ -196,16 +198,12 @@ def train_net(x):
         data_folder=os.path.join('..', 'data', 'validation'),
         image_shape=image_shape)
 
-    logger_cb = plotting_tools.LoggerPlotter()
-    callbacks = [logger_cb]
-
     model.fit_generator(
         train_iter,
         steps_per_epoch=steps_per_epoch,  # the number of batches per epoch,
         epochs=num_epochs,  # the number of epochs to train for,
         validation_data=val_iter,  # validation iterator
         validation_steps=validation_steps,  # the number of batches to validate on
-        callbacks=callbacks,
         workers=workers)
 
     run_num = 'run_1'
@@ -262,6 +260,10 @@ def train_net(x):
 
     weight_file_name = 'model_weights_' + str(final_score)
     model_tools.save_network(model, weight_file_name)
+    print("Saved", weight_file_name)
+
+    print("final_score", final_score)
+    print()
 
     return -final_score
 
