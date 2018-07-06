@@ -284,14 +284,14 @@ if x0 is not None:
 
 res = gp_minimize(
     train_net,
-    [(1e-7, 0.1), # learning_rate = x[0] # 0.001
-     (1, 32),     # batch_size = x[1] # 32
+    [(1e-8, 0.01), # learning_rate = x[0] # 0.001
+     (4, 32),     # batch_size = x[1] # 32
      (5, 100),    # num_epochs = x[2] # 12
      (1, 5),      # layers_num = x[3] #2
      (1, 5),      # conv_layers_num = x[4] #1
-     (4, 128),    # external_features = x[5] #128
-     (4, 128),    # internal_features = x[6] #16
-     (4, 128),    # conv_features = x[7] #16
+     (16, 64),    # external_features = x[5] #128
+     (8, 32),    # internal_features = x[6] #16
+     (8, 32),    # conv_features = x[7] #16
     ],
     callback=[CheckpointSaver(start_iteration).do],
     x0=x0,
