@@ -21,7 +21,6 @@ from tensorflow.contrib.keras.python.keras import layers, models
 from utils import scoring_utils
 from utils.separable_conv2d import SeparableConv2DKeras, BilinearUpSampling2D
 from utils import data_iterator
-from utils import plotting_tools
 from utils import model_tools
 
 MAX_CALLS = 100
