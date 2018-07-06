@@ -140,7 +140,7 @@ def fcn_model(
 
 steps_per_epoch = 200
 validation_steps = 50
-workers = 1
+workers = 4
 
 
 def train_net(x):
