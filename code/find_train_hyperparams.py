@@ -11,6 +11,7 @@ See more details at https://github.com/scikit-optimize/scikit-optimize 
 
 import pickle
 from skopt import gp_minimize
+import numpy as np
 
 import os
 import glob
@@ -271,6 +272,10 @@ if len(checkpoints) > 1:
     # saving it, so load the checkpoint before the last one
     file_name = checkpoints[-2]
     start_iteration, x0, y0 = checkpoint_loader(file_name)
+
+    best_score_idx = np.argmin(y0)
+    print("Best params found so far", x0[best_score_idx], y0[best_score_idx])
+
 else:
     start_iteration = 0
     x0 = None
