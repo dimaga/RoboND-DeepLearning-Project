@@ -309,3 +309,19 @@ in the last cell of `model_training.ipynb` jupyter notebook.
 
 #### Ideas on Futher Enhancements
 
+* Try enhanced custom training dataset after detail  analysis of failing test
+samples
+
+* Penalize bayesian optimization algorithm for selected network architectures
+with higher capacity, prefer simple architectures with minimum amount of
+parameters and operations
+
+* Learn how to cut-off hyper-parameter optimization algorithm earlier by 
+analyzing the behavior of training and validation errors. Make predictions of
+what the final score would be based on that informations to minimize amount of
+fully training sessions
+
+* Try deep reinforcement learning instead of bayesian optimization as more
+sophisticated search for good architectures. This might require much more
+hardware. Try using Google AutoML in this case (once it becomes available to
+normal users).
