@@ -130,8 +130,8 @@ the hero was far away from the observer.
 
 In the simulated environment, it is expected that the network should not be very
 complicated to extract pixels belonging to the hero. Basically it should only
-learn how to extract dark red areas of pixels of a certain shape, which variety
-is not too big.
+learn how to extract dark red areas of pixels of certain shapes, which variety
+is relatively small.
 
 However, having previous experience with manual adjustments of hyper-parameters
 in https://github.com/dimaga/CarND-Semantic-Segmentation project, I decided to
@@ -147,9 +147,9 @@ properties:
 
 * There is no derivative of f(x) or it is very difficult to calculate
 
-* f(x) resulta are noisy and not reproducible for the same x
+* f(x) results are noisy and not reproducible for the same x
 
-`gp_minimize()` allows to find a minimum of such a function by generating some
+`gp_minimize()` finds a minimum of such a function by generating some
 differentiable function g(x) from a set of observations (x, f(x)), which
 approximates f(x) around its minima. In my case, x is a vector of
 hyper-parameters, and f(x) is implemented in  `find_train_hyperparams.py` as
@@ -157,7 +157,7 @@ hyper-parameters, and f(x) is implemented in  `find_train_hyperparams.py` as
 minimum and I am looking for the maximum of `final_score` value.
 
 The training procedure was run on AWS server in g2.8xlarge instance. To run
-the hyper-parameter optimization procedure, I had to make the following steps:
+the hyper-parameter optimization procedure, I had to learn the following tricks:
 
 1. Uninstall cpu tensor-flow in Udacity Robotics Deep Learning Laboratory, and
 install tensorflow-gpu==1.2.1, which requires missing dependency on cuDNN 5.1
@@ -184,8 +184,8 @@ Useful commands are:
 * `ctrl+b, x` - close tmux terminal session
 
 The hyper-pararameter optimizer took 3 days to find a solution with
-final_score = 45% in 40 steps. The following values turned out to be optimal and
-did not require any additional training data:
+final_score = 45% in 40 steps. The following values turned out to be enough
+to pass the project and did not require any additional training data:
 
 ```
 learning_rate = 0.01
@@ -198,10 +198,10 @@ internal_features = 32
 conv_features = 23
 ```
 
-Note that results are not reproducible. From training session to training
-session, the final score may be less than 40%. Therefore, I saved and shared
-the results produced by the successful `find_train_hyperparams.py` run in the
-shared `model_weights` file.
+Note that training results are not reproducible. From training session to
+training session, the final score may be less than 40%. Therefore, I saved and
+shared the results produced by the successful `find_train_hyperparams.py` run
+in the shared `model_weights` file.
 
 #### 4. The student has a clear understanding and is able to identify the use of various techniques and concepts in network layers indicated by the write-up.
 
