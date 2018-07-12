@@ -143,6 +143,10 @@ workers = 4
 
 
 def train_net(x):
+    """Trains the network with the suggested hyper-parameters passed in x
+    argument. Returns -final_score as a result to let ski-opt library find the
+    desired minimum, corresponding to the maximum final_score"""
+
     learning_rate = x[0] # 0.001
     batch_size = x[1] # 32
     num_epochs = x[2] # 12
