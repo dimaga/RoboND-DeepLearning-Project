@@ -325,3 +325,7 @@ fully training sessions
 sophisticated search for good architectures. This might require much more
 hardware. Try using Google AutoML in this case (once it becomes available to
 normal users).
+
+* Add several layers of validation or testing sets to avoid overfitting caused
+by hyper-parameter optimization procedure. Alternatively, increase the size of
+the validation set, taking only random parts of it after each analysis.
