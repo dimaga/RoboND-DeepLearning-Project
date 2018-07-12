@@ -172,8 +172,8 @@ to restart the training procedure in case the server or process crashes.
 See `CheckpointSaver` class and its use cases in `find_train_hyperparams.py`
 
 3. Learn tmux tool that helps create a terminal session, which can be detached
-from ssh-console and attach later. So that I don't keep my notebook constantly
-connected to AWS console for a several days of training session.
+from ssh-console and attached later. So that I don't keep my notebook constantly
+connected to AWS console for several days of training session.
 
 More details on tmux are available on https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session
 Useful commands are:
@@ -183,9 +183,10 @@ Useful commands are:
 * `tmux attach` - attach to the last started tmux session
 * `ctrl+b, x` - close tmux terminal session
 
-The hyper-pararameter optimizer took 3 days to find a solution with
-final_score = 45% in 40 steps. The following values turned out to be enough
-to pass the project and did not require any additional training data:
+The hyper-pararameter optimization and training took 3 days to find a solution
+with final_score = 45% configuration found in 40 steps. The following values
+turned out to be enough to pass the project and did not require any custom
+training data:
 
 ```
 learning_rate = 0.01
@@ -205,7 +206,7 @@ in the shared `model_weights` file.
 
 #### 4. The student has a clear understanding and is able to identify the use of various techniques and concepts in network layers indicated by the write-up.
 
-Building blocks of the network are shown in the picture below:
+Some building blocks of a neural network are shown in the picture below:
 
 [network_parts]: ./images/network_parts.png
 ![alt_text][network_parts]
@@ -213,29 +214,31 @@ Building blocks of the network are shown in the picture below:
 a) 1x1 convolution calculates an output value of each feature from different
 features of a single input cell. In my case, it is used implicitly as a part of
 separable convolution kernel to decrease the number of training parameters. It
-could have also been used in the middle stage, instead of 3x3 convolution layers
-to further decrease the number of training parameters of the network.
+could have also been used in the middle stage, instead of 3x3 convolution
+layers, to further decrease the number of training parameters of the network.
 
-1x1 convolutions shuffle information from different features. However, they do
-not take information from neighbouring pixels. Therefore, they cannot extract
-information about object shape.
+Generally speaking, 1x1 convolutions shuffle information from different
+features. However, they do not take into account neighbouring pixel values.
+Therefore, they cannot extract information about object shape. I wouldn't use
+them as the first layers of the network.
 
 b) 3x3 convolution calculates a value of each feature of the output based on
-3x3 values of all features of the input. 3x3 convolutions are used as a primary
+3x3 values of all input features. 3x3 convolutions are used as a primary
 building block of my network. They extract spatial information about human body
-shape by considering colors of neighbouring pixels.
+shape and surrounding context by considering colors of neighbouring pixels.
 
 c) fully connected layer connects all the input cells to all the output cells.
 The use of such a building block would significantly increase the amount of 
 training parameters of my network and restrict the resolution of the input and
-output image. Therefore, this building block is not used in my network
-architecture. It would be a good final building block for overall image
-classification task, but not for pixel-based classification.
+output image. Therefore, this building block is not used in my 
+architecture. It would be a good final building block for an image
+classification task, but not for a pixel-based classification.
 
 d) bilinear upsampling increases the resolution of the image by filling up 
 intermediate pixels with linearly interpolated values. The benefit of this
 building block is that it does not have any training parameters. Thus, it might
-work faster than traditional deconvolution operation.
+work faster than deconvolution operation, which is conventionally used in this
+case.
 
 #### 5. The student has a clear understanding of image manipulation in the context of the project indicated by the write-up.
 
@@ -253,12 +256,12 @@ would have smaller resolution or accuracy.
 
 #### 6. The student displays a solid understanding of the limitations to the neural network with the given data chosen for various follow-me scenarios which are conveyed in the write-up.
 
-The simulated environment is a very simplified scenario for classification. All
+The simulated environment is a very easy task for classification. In fact, all
 people and the main hero can be very easily distinguished by color. Therefore,
 1x1 convolution layers could be enough to do the classification correctly based
 on only color distribution information.
 
-However, in realistic environments, the fully convolutional network would require
+However, for real environments, the fully convolutional network would require
 significantly more data and capacity. And, maybe, the use of pre-trained network
 layers, such as VGG-16 or ResNet.
 
@@ -273,13 +276,13 @@ and amount of training data is insufficient
 
 * Per-pixel classification does not provide information about the number of
 objects if their shapes intersect. This problem, called object instancing, is
-feasible but requires even more powerful networks
+feasible but requires a more sophisticated architecture
 
 * Fully convolutional network does not utilize temporal information about the
-object if extracting them from the video stream. This information could be
-useful for classyfing distant objects or if the object type depends on its speed
-or type of motion. This is the scope of recurrent fully convolutional network,
-even more powerful architectures.
+environment when doing classification from the video. This information could be
+useful to improve classification of distant objects or if the object type mainly
+depends on its speed or type of motion. This is the scope of recurrent fully
+convolutional network, more complex architectures.
 
 #### 7. The student is able to clearly articulate whether this model and data would work well for following another object (dog, cat, car, etc.) instead of a human and if not, what changes would be required.
 
