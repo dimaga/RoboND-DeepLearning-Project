@@ -288,7 +288,7 @@ convolutional network, more complex architectures.
 
 `model_weights` and `config_model_weights` are available in the correct format
 in `./data/weights` folder of the project. They can be loaded without errors
-from `model_training.ipynb` and `follower.py` with
+from `model_training.ipynb` (see also `model_training.html`) and `follower.py` with
 
 ```
 python follower.py model_weights
@@ -305,7 +305,8 @@ command. Screenshots are available below:
 #### 8. The neural network must achieve a minimum level of accuracy for the network implemented.
 
 I have achieved the final score of 0.45996904563153057, which can be seen
-in the last cell of `model_training.ipynb` jupyter notebook.
+in the last cell of `model_training.ipynb` (see also `model_training.html`)
+jupyter notebook.
 
 #### Ideas on Futher Enhancements
 
