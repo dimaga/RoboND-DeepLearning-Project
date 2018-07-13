@@ -272,7 +272,9 @@ mainly due to decoding layers, which have to process a lot of data for the outpu
 
 * Classes of objects similar by appearance (e.g. cats and dogs) may be
 misclassified when appear in the same context (e.g. on the road) if the capacity
-and amount of training data is insufficient
+and amount of training data is insufficient. Of course, for other classes of
+objects, we should increase the number of classes and use new data-sets where
+those classes are presented and labelled.
 
 * Per-pixel classification does not provide information about the number of
 objects if their shapes intersect. This problem, called object instancing, is
@@ -284,7 +286,7 @@ useful to improve classification of distant objects or if the object type mainly
 depends on its speed or type of motion. This is the scope of recurrent fully
 convolutional network, more complex architectures.
 
-#### 7. The student is able to clearly articulate whether this model and data would work well for following another object (dog, cat, car, etc.) instead of a human and if not, what changes would be required.
+#### 7. The model is submitted in the correct format.
 
 `model_weights` and `config_model_weights` are available in the correct format
 in `./data/weights` folder of the project. They can be loaded without errors
